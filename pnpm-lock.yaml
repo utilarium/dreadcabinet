@@ -22,7 +22,7 @@ importers:
         version: 11.0.3
       zod:
         specifier: ^4.0.2
-        version: 4.0.2
+        version: 4.3.5
     devDependencies:
       '@babel/core':
         specifier: ^7.28.0
@@ -2762,8 +2762,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@4.0.2:
-    resolution: {integrity: sha512-X2niJNY54MGam4L6Kj0AxeedeDIi/E5QFW0On2faSX5J4/pfLk1tW+cRMIMoojnCavn/u5W/kX17e1CSGnKMxA==}
+  zod@4.3.5:
+    resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
 
 snapshots:
 
@@ -3862,7 +3862,7 @@ snapshots:
       commander: 14.0.0
       glob: 11.0.3
       js-yaml: 4.1.0
-      zod: 4.0.2
+      zod: 4.3.5
 
   '@types/argparse@1.0.38': {}
 
@@ -5782,4 +5782,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@4.0.2: {}
+  zod@4.3.5: {}
