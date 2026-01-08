@@ -25,7 +25,7 @@ npm install @theunwalked/dreadcabinet
 # yarn
 yarn add @theunwalked/dreadcabinet
 
-# pnpm  
+# pnpm
 pnpm add @theunwalked/dreadcabinet
 ```
 
@@ -95,4 +95,4 @@ We welcome contributions! Please see our [Contributing Guide](https://semicolona
 
 ## License
 
-[Apache-2.0](./LICENSE) © 2025 Semicolon Ambulance 
+[Apache-2.0](./LICENSE) © 2025 Tim O'Brien 

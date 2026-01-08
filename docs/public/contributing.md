@@ -6,7 +6,7 @@ We welcome contributions to DreadCabinet! This guide will help you get started w
 
 ### Prerequisites
 
-- **Node.js** 18+ and **pnpm** 8+
+- **Node.js** 18+ and **npm** 9+
 - **Git** for version control
 - **TypeScript** knowledge (the project is written in TypeScript)
 
@@ -14,28 +14,28 @@ We welcome contributions to DreadCabinet! This guide will help you get started w
 
 1. **Fork and clone the repository**:
    ```bash
-   git clone https://github.com/SemicolonAmbulance/dreadcabinet.git
+   git clone https://github.com/tobrien/dreadcabinet.git
    cd dreadcabinet
    ```
 
 2. **Install dependencies**:
    ```bash
-   pnpm install
+   npm install
    ```
 
 3. **Build the project**:
    ```bash
-   pnpm run build
+   npm run build
    ```
 
 4. **Run tests**:
    ```bash
-   pnpm run test
+   npm test
    ```
 
 5. **Start development mode**:
    ```bash
-   pnpm run dev
+   npm run dev
    ```
 
 ### Project Structure
@@ -81,16 +81,16 @@ Run the full test suite:
 
 ```bash
 # Run tests with coverage
-pnpm run test
+npm test
 
 # Run tests in watch mode during development
-pnpm run test:watch
+npm test --watch
 
 # Run linting
-pnpm run lint
+npm run lint
 
 # Fix linting issues automatically
-pnpm run lint:fix
+npm run lint:fix
 ```
 
 ### 4. Update Documentation
@@ -259,7 +259,7 @@ Help improve test coverage:
 ### Before Submitting
 
 - [ ] Tests pass locally
-- [ ] Code is properly formatted (`pnpm run lint:fix`)
+- [ ] Code is properly formatted (`npm run lint:fix`)
 - [ ] Documentation is updated
 - [ ] Commit messages follow conventional format
 - [ ] Branch is up to date with main

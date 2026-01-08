@@ -7,9 +7,8 @@
     "type": "module",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/SemicolonAmbulance/dreadcabinet.git"
+        "url": "git+https://github.com/tobrien/dreadcabinet.git"
     },
-    "packageManager": "pnpm@10.13.1",
     "exports": {
         ".": {
             "types": "./dist/dreadcabinet.d.ts",
@@ -18,17 +17,17 @@
         }
     },
     "scripts": {
-        "build": "pnpm run lint && tsc --noEmit && vite build",
+        "build": "npm run lint && tsc --noEmit && vite build",
         "start": "dist/main.js",
         "dev": "vite build --watch",
-        "watch": "pnpm run dev",
-        "test": "pnpm run test:readme && pnpm run test:coverage",
+        "watch": "npm run dev",
+        "test": "npm run test:readme && npm run test:coverage",
         "test:coverage": "vitest run --coverage",
         "test:readme": "doccident -c .markdown-doctest-setup.mjs README.md",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint . --ext .ts --fix",
         "clean": "rm -rf dist",
-        "prepublishOnly": "pnpm run clean && pnpm run build"
+        "prepublishOnly": "npm run clean && npm run build"
     },
     "keywords": [
         "focus",
@@ -36,7 +35,7 @@
         "notes",
         "genai"
     ],
-    "author": "Semicolon Ambulance <semicolonambulance@proton.me>",
+    "author": "Tim O'Brien <tobrien@discursive.com>",
     "license": "Apache-2.0",
     "dependencies": {
         "commander": "^14.0.0",
@@ -69,9 +68,7 @@
         "vite-plugin-node": "^7.0.0",
         "vitest": "^3.2.4"
     },
-    "pnpm": {
-        "overrides": {
-            "wrap-ansi": "7.0.0"
-        }
+    "overrides": {
+        "wrap-ansi": "7.0.0"
     }
 }
