@@ -278,7 +278,7 @@ Check these common issues:
 
 ### How do I report bugs or request features?
 
-1. Check the [GitHub issues](https://github.com/SemicolonAmbulance/dreadcabinet/issues) for existing reports
+1. Check the [GitHub issues](https://github.com/utilarium/dreadcabinet/issues) for existing reports
 2. Create a new issue with:
    - Clear description of the problem or feature request
    - Code examples demonstrating the issue
