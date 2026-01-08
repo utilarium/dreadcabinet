@@ -24,9 +24,6 @@ npm install @theunwalked/dreadcabinet
 ```bash
 # yarn
 yarn add @theunwalked/dreadcabinet
-
-# pnpm
-pnpm add @theunwalked/dreadcabinet
 ```
 
 ## Quick Start
@@ -79,19 +76,19 @@ my-app \
 
 For complete documentation, including detailed configuration options, advanced usage examples, and integration guides, visit:
 
-**[📖 DreadCabinet Documentation](https://semicolonambulance.github.io/dreadcabinet/)**
+**[📖 DreadCabinet Documentation](https://utilarium.github.io/dreadcabinet/)**
 
 ### Quick Links
 
-- [Getting Started Guide](https://semicolonambulance.github.io/dreadcabinet/#getting-started)
-- [CLI Options Reference](https://semicolonambulance.github.io/dreadcabinet/#cli-options)
-- [Configuration Files](https://semicolonambulance.github.io/dreadcabinet/#configuration-files)
-- [Advanced Usage](https://semicolonambulance.github.io/dreadcabinet/#advanced-usage)
-- [API Reference](https://semicolonambulance.github.io/dreadcabinet/#api-reference)
+- [Getting Started Guide](https://utilarium.github.io/dreadcabinet/#getting-started)
+- [CLI Options Reference](https://utilarium.github.io/dreadcabinet/#cli-options)
+- [Configuration Files](https://utilarium.github.io/dreadcabinet/#configuration-files)
+- [Advanced Usage](https://utilarium.github.io/dreadcabinet/#advanced-usage)
+- [API Reference](https://utilarium.github.io/dreadcabinet/#api-reference)
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](https://semicolonambulance.github.io/dreadcabinet/#contributing) for details.
+We welcome contributions! Please see our [Contributing Guide](https://utilarium.github.io/dreadcabinet/#contributing) for details.
 
 ## License
 
