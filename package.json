@@ -40,6 +40,7 @@
   "author": "Tim O'Brien <tobrien@discursive.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "@theunwalked/dreadcabinet": "^0.0.10",
     "commander": "^14.0.0",
     "dayjs": "^1.11.13",
     "glob": "^11.0.3",

@@ -21,7 +21,7 @@ npm install @theunwalked/dreadcabinet
 
 *Or with other package managers:*
 
-```bash
+```console
 # yarn
 yarn add @theunwalked/dreadcabinet
 ```
@@ -64,7 +64,7 @@ await operator.process(async (file) => {
 
 Once integrated, users can process files with commands like:
 
-```bash
+```console
 my-app \
   --input-directory . \
   --output-directory ./organized \
