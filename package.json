@@ -56,7 +56,7 @@
     "@eslint/js": "^9.30.1",
     "@rollup/plugin-replace": "^6.0.2",
     "@swc/core": "^1.12.11",
-    "@theunwalked/cardigantime": "^0.0.16",
+    "@theunwalked/cardigantime": "^0.0.19",
     "@types/node": "^24.0.12",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
