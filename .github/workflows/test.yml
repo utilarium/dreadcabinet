@@ -22,7 +22,3 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm test
-      - uses: codecov/codecov-action@v5
-        with:
-          slug: theunwalked/dreadcabinet
-          token: ${{ secrets.CODECOV_TOKEN }}
