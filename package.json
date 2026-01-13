@@ -1,6 +1,6 @@
 {
   "name": "@theunwalked/dreadcabinet",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "dreadcabinet organizes the chaos.",
   "main": "dist/dreadcabinet.cjs",
   "module": "dist/dreadcabinet.js",
@@ -39,6 +39,9 @@
   ],
   "author": "Tim O'Brien <tobrien@discursive.com>",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "commander": "^14.0.0",
     "dayjs": "^1.11.13",
@@ -55,7 +58,7 @@
     "@eslint/js": "^9.30.1",
     "@rollup/plugin-replace": "^6.0.2",
     "@swc/core": "^1.12.11",
-    "@theunwalked/cardigantime": "^0.0.20",
+    "@theunwalked/cardigantime": "^0.0.21",
     "@types/node": "^24.0.12",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
