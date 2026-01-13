@@ -1,4 +1,4 @@
-import { transform } from '@babel/core';
+import { transformSync } from '@swc/core';
 // eslint-disable-next-line import/extensions
 import * as DreadCabinet from './dist/dreadcabinet.js'; // Adjusted path
 import { Command } from 'commander';
@@ -18,7 +18,9 @@ const mockProcess = {
 
 export default {
     "globals": {
-        'process': mockProcess
+        'process': mockProcess,
+        'exports': {},
+        'module': { exports: {} }
     },
     "require": {
         '@theunwalked/dreadcabinet': DreadCabinet, // Adjusted key and value
@@ -57,7 +59,7 @@ export default {
         };
 
         const { importBlock, mainCodeBlock } = getBlocks(code);
-        let codeForBabel = code; // Default to original code
+        let codeToTransform = code; // Default to original code
 
         const trimmedMainCode = mainCodeBlock.trim();
         // Only wrap if 'await' is present in the executable part of the main code block.
@@ -71,35 +73,45 @@ export default {
             // Reconstruct the code
             if (importBlock.trim() === '') {
                 // No substantial import block, so the code is just the wrapped main part.
-                codeForBabel = wrappedMainCode;
+                codeToTransform = wrappedMainCode;
             } else {
                 // We have a non-empty import block.
                 // Ensure it ends with one newline, then append the wrapped main code.
-                codeForBabel = importBlock.trimEnd() + '\n' + wrappedMainCode;
+                codeToTransform = importBlock.trimEnd() + '\n' + wrappedMainCode;
             }
         }
-        // If no wrapping occurred, codeForBabel remains the original 'code'.
+        // If no wrapping occurred, codeToTransform remains the original 'code'.
 
-        const babelOptions = {
-            filename: 'test.ts', // Provide a filename for Babel
-            presets: ['@babel/preset-typescript'], // Handles TypeScript syntax
-            plugins: [
-                // Transforms ES module syntax (import/export) to CommonJS.
-                '@babel/plugin-transform-modules-commonjs',
-            ],
-            sourceType: 'module', // Parse input as an ES module
-            comments: true, // Preserve comments
+        const swcOptions = {
+            filename: 'test.ts',
+            jsc: {
+                parser: {
+                    syntax: 'typescript',
+                    tsx: false,
+                },
+                target: 'es2024',
+                preserveAllComments: true,
+            },
+            module: {
+                type: 'commonjs',
+            },
+            sourceMaps: false,
         };
 
         try {
-            const transformed = transform(codeForBabel, babelOptions);
-            // Fallback to codeForBabel if transformation somehow fails or returns nothing
-            return transformed?.code || codeForBabel;
+            const transformed = transformSync(codeToTransform, swcOptions);
+            // Fallback to codeToTransform if transformation somehow fails or returns nothing
+            return transformed?.code || codeToTransform;
         } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error("Babel transformation error in markdown-doctest-setup:", error); // Keep commented
-            // In case of error, return the processed (possibly wrapped) code to help debug
-            return codeForBabel;
+            // Non-JS/TS code (like bash) will fail to parse - just return it unchanged
+            // Only log if it looks like it should be valid JS/TS (has import/export/const/let/var/function)
+            const looksLikeJS = /^(import|export|const|let|var|function|class|async)\s/.test(codeToTransform.trim());
+            if (looksLikeJS) {
+                // eslint-disable-next-line no-console
+                console.error("SWC transformation error in markdown-doctest-setup:", error);
+            }
+            // Return the original code to let the doctest runner handle it
+            return codeToTransform;
         }
     }
 } 
