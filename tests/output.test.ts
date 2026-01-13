@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type { Config, Options } from '../src/dreadcabinet';
 import type * as StorageUtil from '../src/util/storage';
 import type * as DatesUtil from '../src/util/dates';
-import path from 'path'; // Import path for verification
+import * as path from 'node:path'; // Import path for verification
 
 // --- Mock Dependencies ---
 
