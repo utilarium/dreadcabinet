@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'node:path';
 import { DATE_FORMAT_DAY, DATE_FORMAT_MONTH, DATE_FORMAT_MONTH_DAY, DATE_FORMAT_YEAR, DATE_FORMAT_YEAR_MONTH_DAY } from './constants';
 import { Config } from './dreadcabinet';
 import * as Dates from './util/dates';

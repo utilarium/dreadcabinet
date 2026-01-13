@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Feature, Logger } from 'dreadcabinet';
-import * as path from 'path';
+import * as path from 'node:path';
 
 // Define the callback type to match the expected signature
 type FileCallback = (file: string, date?: Date) => Promise<void>;

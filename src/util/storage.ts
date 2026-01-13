@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-restricted-imports
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import { glob } from 'glob';
-import path from 'path';
-import crypto from 'crypto';
+import * as path from 'node:path';
+import * as crypto from 'node:crypto';
 /**
  * This module exists to isolate filesystem operations from the rest of the codebase.
  * This makes testing easier by avoiding direct fs mocking in jest configuration.

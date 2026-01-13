@@ -1,5 +1,5 @@
 import { Feature, FilenameOption, FilesystemStructure, Logger } from 'dreadcabinet';
-import * as path from 'path';
+import * as path from 'node:path';
 import { z } from 'zod';
 import { ArgumentError } from "../configure";
 import { DATE_FORMAT_YEAR_MONTH_DAY } from '../constants';

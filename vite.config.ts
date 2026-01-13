@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import { VitePluginNode } from 'vite-plugin-node';
 import replace from '@rollup/plugin-replace';
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
 import dts from 'vite-plugin-dts';
 
 let gitInfo = {
@@ -68,7 +68,11 @@ export default defineConfig({
         target: 'esnext',
         outDir: 'dist',
         rollupOptions: {
-            external: ['@theunwalked/cardigantime'],
+            external: [
+                '@theunwalked/cardigantime',
+                // Node built-ins
+                /^node:/,
+            ],
             input: 'src/dreadcabinet.ts',
             output: [
                 {
