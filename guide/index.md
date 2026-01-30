@@ -26,7 +26,7 @@ When analyzing or generating code using `dreadcabinet`, keep these patterns in m
 
 ```typescript
 import { Command } from 'commander';
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 
 const instance = DreadCabinet.create({
   defaults: {

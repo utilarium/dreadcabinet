@@ -1,8 +1,8 @@
 # Configuration Through Files
 
-While DreadCabinet offers a rich set of command-line arguments, for complex or frequently used configurations, you might prefer using a configuration file. This is where `@theunwalked/cardigantime`, a sister library, comes into play.
+While DreadCabinet offers a rich set of command-line arguments, for complex or frequently used configurations, you might prefer using a configuration file. This is where `@utilarium/cardigantime`, a sister library, comes into play.
 
-`@theunwalked/cardigantime` is designed to load configurations from various file formats (like YAML, JSON, or JS modules) and can seamlessly integrate with applications like DreadCabinet. By using both libraries, you can define all your DreadCabinet options in a configuration file and even override them with command-line arguments if needed. This provides a flexible and powerful way to manage your settings.
+`@utilarium/cardigantime` is designed to load configurations from various file formats (like YAML, JSON, or JS modules) and can seamlessly integrate with applications like DreadCabinet. By using both libraries, you can define all your DreadCabinet options in a configuration file and even override them with command-line arguments if needed. This provides a flexible and powerful way to manage your settings.
 
 ## Why Use Configuration Files?
 
@@ -16,12 +16,12 @@ Configuration files provide several advantages over command-line arguments alone
 
 ## Integration with Cardigantime
 
-Here's a comprehensive example of how you might use `@theunwalked/cardigantime` to load settings before configuring DreadCabinet. This example is inspired by how a sister project, Cortalyne, integrates these libraries:
+Here's a comprehensive example of how you might use `@utilarium/cardigantime` to load settings before configuring DreadCabinet. This example is inspired by how a sister project, Cortalyne, integrates these libraries:
 
 ```js
 import { Command } from 'commander';
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
-import * as Cardigantime from '@theunwalked/cardigantime';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
+import * as Cardigantime from '@utilarium/cardigantime';
 import { z } from 'zod'; // Assuming Zod is used for schema validation, similar to Cortalyne
 
 // Define a Zod schema for your application-specific configurations, if any
@@ -142,7 +142,7 @@ async function main() {
 main().catch(console.error);
 ```
 
-This snippet illustrates a more robust way to load a `config.yaml` or `config.json` file using `@theunwalked/cardigantime`, integrate its settings with DreadCabinet's configuration, and manage command-line arguments. It leverages Zod for schema definition and validation, similar to the approach in `cortalyne`.
+This snippet illustrates a more robust way to load a `config.yaml` or `config.json` file using `@utilarium/cardigantime`, integrate its settings with DreadCabinet's configuration, and manage command-line arguments. It leverages Zod for schema definition and validation, similar to the approach in `cortalyne`.
 
 ## Sample Configuration Files
 

@@ -8,7 +8,7 @@
 
 ```typescript
 import { Command } from 'commander';
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 
 // 1. Create instance with your defaults
 const manager = DreadCabinet.create({
