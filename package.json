@@ -29,7 +29,12 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "precommit": "npm run build && npm run test",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "docs:dev": "cd docs && cp ../README.md public/ && npm install && npm run dev",
+    "docs:build": "cd docs && cp ../README.md public/ && npm install && npm run build",
+    "docs:preview": "cd docs && npm run preview",
+    "docs:test": "cd docs && npm install && npm run test",
+    "docs:coverage": "cd docs && npm install && npm run coverage"
   },
   "keywords": [
     "focus",
@@ -45,29 +50,29 @@
   "dependencies": {
     "commander": "^14.0.0",
     "dayjs": "^1.11.13",
-    "glob": "^11.0.3",
+    "glob": "^13.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@doccident/doccident": "^0.0.7",
+    "@doccident/doccident": "^0.0.15",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.30.1",
     "@rollup/plugin-replace": "^6.0.2",
-    "@swc/core": "^1.12.11",
-    "@theunwalked/cardigantime": "^0.0.22",
-    "@types/node": "^24.0.12",
-    "@typescript-eslint/eslint-plugin": "^8.36.0",
-    "@typescript-eslint/parser": "^8.36.0",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@swc/core": "^1.15.11",
+    "@theunwalked/cardigantime": "^0.0.23",
+    "@types/node": "^25.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.30.1",
     "eslint-plugin-import": "^2.32.0",
-    "globals": "^16.3.0",
+    "globals": "^17.2.0",
     "mockdate": "^3.0.5",
     "typescript": "^5.8.3",
     "vite": "^7.0.4",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-node": "^7.0.0",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.18"
   },
   "overrides": {
     "wrap-ansi": "7.0.0"
