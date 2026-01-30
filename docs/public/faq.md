@@ -146,7 +146,7 @@ This is useful for testing configurations on large file collections.
 
 ### Can I use configuration files instead of command-line arguments?
 
-Yes! DreadCabinet integrates well with `@theunwalked/cardigantime` for configuration file support. You can use YAML, JSON, or JavaScript configuration files. See the [Configuration Files](configuration-files.md) guide for detailed examples.
+Yes! DreadCabinet integrates well with `@utilarium/cardigantime` for configuration file support. You can use YAML, JSON, or JavaScript configuration files. See the [Configuration Files](configuration-files.md) guide for detailed examples.
 
 ### How do command-line arguments override configuration files?
 
@@ -181,7 +181,7 @@ my-app --config-file .config/production.yaml
 
 Follow these basic steps:
 
-1. Install DreadCabinet: `npm install @theunwalked/dreadcabinet`
+1. Install DreadCabinet: `npm install @utilarium/dreadcabinet`
 2. Create a DreadCabinet instance with your defaults
 3. Configure your Commander.js program with DreadCabinet options
 4. Parse CLI arguments and validate configuration

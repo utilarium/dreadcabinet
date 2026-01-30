@@ -2,6 +2,7 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import { DATE_FORMAT_YEAR_MONTH_DAY } from '../constants';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -157,7 +158,7 @@ export const create = (parameters: { timezone: string }) => {
 
     const today = () => {
         // Return today's date formatted as YYYY-M-D in the specified timezone
-        return dayjs().tz(timezone).format('YYYY-M-D');
+        return dayjs().tz(timezone).format(DATE_FORMAT_YEAR_MONTH_DAY);
     }
 
     const date = (date: string | number | Date | null | undefined) => {

@@ -11,7 +11,12 @@ export const applyDefaults = (config: Partial<Config>, features: Feature[], defa
     if (features.includes('input')) {
         configWithDefaults.recursive = config.recursive === undefined ? (defaults?.recursive ?? DEFAULT_RECURSIVE) : config.recursive;
         configWithDefaults.inputDirectory = config.inputDirectory || (defaults?.inputDirectory || DEFAULT_INPUT_DIRECTORY);
-        configWithDefaults.concurrency = config.concurrency || (defaults?.concurrency || DEFAULT_CONCURRENCY);
+        // Ensure concurrency is a valid positive integer, otherwise use default
+        if (config.concurrency === undefined || !Number.isInteger(config.concurrency) || config.concurrency < 1) {
+            configWithDefaults.concurrency = defaults?.concurrency || DEFAULT_CONCURRENCY;
+        } else {
+            configWithDefaults.concurrency = config.concurrency;
+        }
     }
     if (features.includes('output')) {
         configWithDefaults.outputDirectory = config.outputDirectory || (defaults?.outputDirectory || DEFAULT_OUTPUT_DIRECTORY);

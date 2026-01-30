@@ -116,22 +116,37 @@ export const create = (params: { log?: (message: string, ...args: any[]) => void
         options: { pattern: string | string[], limit?: number, concurrency?: number } = { pattern: '*.*' },
     ): Promise<void> => {
         try {
-            let filesProcessed = 0;
+            // NOTE: glob loads all matching files into memory before processing.
+            // For directories with millions of files, this can cause out-of-memory errors.
+            // Consider using streaming glob or incremental processing for very large directories.
             const files = await glob(options.pattern, { cwd: directory, nodir: true });
             const concurrency = options.concurrency || 1;
-            let index = 0;
+            const limit = options.limit || files.length;
+            
+            // Use a queue-based approach to avoid race conditions
+            const fileQueue: string[] = files.slice(0, limit);
+            let filesProcessed = 0;
+            
             async function worker() {
-                while (index < files.length && (!options.limit || filesProcessed < options.limit)) {
-                    const i = index++;
-                    if (options.limit && filesProcessed >= options.limit) break;
-                    await callback(path.join(directory, files[i]));
+                while (fileQueue.length > 0 && filesProcessed < limit) {
+                    // Atomically get next file from queue
+                    const file = fileQueue.shift();
+                    if (!file) break;
+                    
+                    await callback(path.join(directory, file));
+                    
+                    // Atomically increment counter
                     filesProcessed++;
+                    
+                    if (filesProcessed >= limit) {
+                        break;
+                    }
                 }
             }
             const workers = Array.from({ length: concurrency }, () => worker());
             await Promise.all(workers);
-            if (options.limit && filesProcessed >= options.limit) {
-                log(`Reached limit of ${options.limit} files, stopping`);
+            if (filesProcessed >= limit) {
+                log(`Reached limit of ${limit} files, stopping`);
             }
         } catch (err: any) {
             throw new Error(`Failed to glob pattern ${options.pattern} in ${directory}: ${err.message}`);

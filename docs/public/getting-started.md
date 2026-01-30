@@ -18,14 +18,14 @@ Here's how to integrate DreadCabinet into your CLI application:
 ### 1. Install DreadCabinet
 
 ```bash
-npm install @theunwalked/dreadcabinet
+npm install @utilarium/dreadcabinet
 ```
 
 ### 2. Create a Basic CLI Tool
 
 ```javascript
 import { Command } from 'commander';
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 
 // Create a DreadCabinet instance with default options
 const instance = DreadCabinet.create({
@@ -88,7 +88,7 @@ my-organizer \
 ### Example 1: Simple Note Organizer
 
 ```javascript
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 import fs from 'fs/promises';
 import path from 'path';
 

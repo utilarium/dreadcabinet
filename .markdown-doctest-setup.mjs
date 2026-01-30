@@ -2,7 +2,7 @@ import { transformSync } from '@swc/core';
 // eslint-disable-next-line import/extensions
 import * as DreadCabinet from './dist/dreadcabinet.js'; // Adjusted path
 import { Command } from 'commander';
-import * as Cardigantime from '@theunwalked/cardigantime';
+import * as Cardigantime from '@utilarium/cardigantime';
 import { z } from 'zod';
 
 const mockProcess = {
@@ -23,9 +23,9 @@ export default {
         'module': { exports: {} }
     },
     "require": {
-        '@theunwalked/dreadcabinet': DreadCabinet, // Adjusted key and value
+        '@utilarium/dreadcabinet': DreadCabinet, // Adjusted key and value
         'commander': { Command },
-        '@theunwalked/cardigantime': Cardigantime,
+        '@utilarium/cardigantime': Cardigantime,
         'zod': { z }
     },
     transformCode: (code) => {

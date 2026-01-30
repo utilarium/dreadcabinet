@@ -7,7 +7,7 @@ import { Options } from 'dreadcabinet';
 
 export const create = (config: Config, options: Options): {
     constructFilename: (date: Date, type: string, hash: string, options?: { subject?: string }) => string;
-    constructOutputDirectory: (creationTime: Date) => string;
+    constructOutputDirectory: (creationTime: Date) => Promise<string>;
 } => {
     const logger = options.logger;
     const timezone = config?.timezone || 'UTC';
@@ -35,8 +35,9 @@ export const create = (config: Config, options: Options): {
     }
 
     function sanitizeFilenameString(str: string): string {
-        // Replace any character that is not alphanumeric, hyphen, underscore, or dot with an underscore
-        return str.replace(/[^a-zA-Z0-9\-_.]/g, '_')
+        // Replace any character that is not alphanumeric (including unicode), hyphen, underscore, or dot with an underscore
+        // Use \p{L} for unicode letters and \p{N} for unicode numbers
+        return str.replace(/[^\p{L}\p{N}\-_.]/gu, '_')
             // Replace multiple consecutive underscores with a single underscore
             .replace(/_+/g, '_')
             // Remove leading and trailing underscores
@@ -81,7 +82,7 @@ export const create = (config: Config, options: Options): {
         return parts.join('-');
     }
 
-    function constructOutputDirectory(creationTime: Date) {
+    async function constructOutputDirectory(creationTime: Date) {
 
         // Throw this error to ensure that we don't success if outputDirectory or outputStructure are not set
         if (!outputDirectory) {
@@ -114,7 +115,7 @@ export const create = (config: Config, options: Options): {
                 outputPath = outputDirectory!;
         }
 
-        storage.createDirectory(outputPath);
+        await storage.createDirectory(outputPath);
         return outputPath;
     }
 

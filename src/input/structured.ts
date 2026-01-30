@@ -48,6 +48,7 @@ export const parseDateFromString = (
     dateStr: string,
     format: 'YYYY-M-D-HHmm' | 'M-D-HHmm' | 'D-HHmm' | 'HHmm',
     shouldParseTime: boolean, // New required parameter
+    timezone: string,
     year?: number,
     month?: number,
     day?: number
@@ -137,16 +138,52 @@ export const parseDateFromString = (
             throw new Error(`Invalid date components in date string "${dateStr}" with format ${format}: Y:${y} M:${mo + 1} D:${d} H:${h} m:${mi}`);
         }
 
-
-
-
-        const date = new Date(Date.UTC(y, mo, d, h, mi));
-        // Double check components as Date object might adjust invalid dates (e.g. Feb 30th -> Mar 2nd)
-        if (date.getUTCFullYear() !== y || date.getUTCMonth() !== mo || date.getUTCDate() !== d || date.getUTCHours() !== h || date.getUTCMinutes() !== mi) {
-            // console.debug(`Date validation failed for Y:${y} M:${mo} D:${d} H:${h} m:${mi}. JS Date adjusted it.`);
-            return null;
+        // Create timezone-aware date
+        // For UTC timezone, use Date.UTC for efficiency and exact matching
+        // For other timezones, use timezone-aware parsing
+        let date: Date;
+        if (timezone === 'UTC' || timezone === 'Etc/UTC') {
+            date = new Date(Date.UTC(y, mo, d, h, mi));
+            // Validate that Date didn't adjust invalid dates (e.g., Feb 30 -> Mar 2)
+            if (date.getUTCFullYear() !== y || 
+                date.getUTCMonth() !== mo || 
+                date.getUTCDate() !== d || 
+                date.getUTCHours() !== h || 
+                date.getUTCMinutes() !== mi) {
+                return null;
+            }
+        } else {
+            // Use timezone-aware parsing for non-UTC timezones
+            const dates = Dates.create({ timezone });
+            const monthStr = String(mo + 1).padStart(2, '0');
+            const dayStr = String(d).padStart(2, '0');
+            const hourStr = String(h).padStart(2, '0');
+            const minuteStr = String(mi).padStart(2, '0');
+            const dateStrFormatted = `${y}-${monthStr}-${dayStr}T${hourStr}:${minuteStr}:00`;
+            
+            try {
+                date = dates.date(dateStrFormatted);
+                
+                // Validate that the date components match in the timezone context
+                const formattedYear = parseInt(dates.format(date, 'YYYY'), 10);
+                const formattedMonth = parseInt(dates.format(date, 'M'), 10);
+                const formattedDay = parseInt(dates.format(date, 'D'), 10);
+                const formattedHour = parseInt(dates.format(date, 'H'), 10);
+                const formattedMinute = parseInt(dates.format(date, 'm'), 10);
+                
+                // Check if date was adjusted (e.g., Feb 30 -> Mar 2)
+                if (formattedYear !== y || 
+                    formattedMonth !== (mo + 1) || 
+                    formattedDay !== d ||
+                    formattedHour !== h ||
+                    formattedMinute !== mi) {
+                    return null;
+                }
+            } catch {
+                return null;
+            }
         }
-
+        
         return date;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
@@ -223,6 +260,7 @@ export const parseDateFromFilePath = (
     filename: string,
     structure: string,
     shouldParseTime: boolean,
+    timezone: string,
     logger: Logger
 ): Date | null => {
     const pathParts = relativePath.split(path.sep);
@@ -236,14 +274,14 @@ export const parseDateFromFilePath = (
     switch (structure) {
         case 'none':
             // Filename format: YYYY-M-D-HHmm...
-            parsedDate = parseDateFromString(filenameWithoutExt, 'YYYY-M-D-HHmm', shouldParseTime);
+            parsedDate = parseDateFromString(filenameWithoutExt, 'YYYY-M-D-HHmm', shouldParseTime, timezone);
             break;
         case 'year':
             // Path: YYYY / M-D-HHmm...
             if (pathParts.length >= 1) {
                 year = parseInt(pathParts[0], 10);
                 if (!isNaN(year)) {
-                    parsedDate = parseDateFromString(filenameWithoutExt, 'M-D-HHmm', shouldParseTime, year);
+                    parsedDate = parseDateFromString(filenameWithoutExt, 'M-D-HHmm', shouldParseTime, timezone, year);
                 } else {
                     logger.warn(`Invalid year format in path: ${pathParts[0]}`);
                 }
@@ -258,7 +296,7 @@ export const parseDateFromFilePath = (
                 const monthDir = parseInt(pathParts[1], 10); // Month from dir (1-indexed)
                 if (!isNaN(year) && !isNaN(monthDir) && monthDir >= 1 && monthDir <= 12) {
                     month = monthDir - 1; // Adjust month for Date object (0-indexed)
-                    parsedDate = parseDateFromString(filenameWithoutExt, 'D-HHmm', shouldParseTime, year, month);
+                    parsedDate = parseDateFromString(filenameWithoutExt, 'D-HHmm', shouldParseTime, timezone, year, month);
                 } else {
                     logger.warn(`Invalid year/month format in path: ${pathParts[0]}/${pathParts[1]}`);
                 }
@@ -274,7 +312,7 @@ export const parseDateFromFilePath = (
                 day = parseInt(pathParts[2], 10); // Day from dir (1-indexed)
                 if (!isNaN(year) && !isNaN(monthDir) && monthDir >= 1 && monthDir <= 12 && !isNaN(day) && day >= 1 && day <= 31) {
                     month = monthDir - 1; // Adjust month (0-indexed)
-                    parsedDate = parseDateFromString(filenameWithoutExt, 'HHmm', shouldParseTime, year, month, day);
+                    parsedDate = parseDateFromString(filenameWithoutExt, 'HHmm', shouldParseTime, timezone, year, month, day);
                 } else {
                     logger.warn(`Invalid year/month/day format in path: ${pathParts[0]}/${pathParts[1]}/${pathParts[2]}`);
                 }
@@ -296,6 +334,7 @@ export const processStructuredFile = async (
     inputDirectory: string,
     structure: string,
     shouldParseTime: boolean,
+    timezone: string,
     callback: (file: string, date?: Date) => Promise<void>,
     pattern: string,
     dateRange: DateRange,
@@ -316,7 +355,7 @@ export const processStructuredFile = async (
     }
 
     try {
-        const parsedDate = parseDateFromFilePath(relativePath, filename, structure, shouldParseTime, logger);
+        const parsedDate = parseDateFromFilePath(relativePath, filename, structure, shouldParseTime, timezone, logger);
 
         if (parsedDate) {
             // Apply date range filtering
@@ -367,10 +406,10 @@ export const process = async (
 
     // Validate date range dates if provided
     if (dateRange?.start && (!dateRange.start || isNaN(dateRange.start.getTime()))) {
-        logger.warn(`Invalid start date provided in dateRange: ${dateRange.start}`);
+        throw new Error(`Invalid start date provided in dateRange: ${dateRange.start}`);
     }
     if (dateRange?.end && (!dateRange.end || isNaN(dateRange.end.getTime()))) {
-        logger.warn(`Invalid end date provided in dateRange: ${dateRange.end}`);
+        throw new Error(`Invalid end date provided in dateRange: ${dateRange.end}`);
     }
 
     // Structured Input Logic
@@ -395,6 +434,7 @@ export const process = async (
             inputDirectory,
             structure,
             shouldParseTime,
+            timezone,
             callback,
             filePattern,
             dateRange,

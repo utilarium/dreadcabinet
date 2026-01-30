@@ -15,12 +15,9 @@ export { ArgumentError };
 
 export const validate = async (config: Config, options: Options): Promise<void> => {
 
-    const logger: typeof console = console;
-    const storage = Storage.create({ log: logger.debug });
+    const storage = Storage.create({ log: options.logger.debug });
 
     const validateInputDirectory = async (inputDirectory: string) => {
-        // eslint-disable-next-line no-console
-        const storage = Storage.create({ log: console.log });
         if (!storage.isDirectoryReadable(inputDirectory)) {
             throw new Error(`Input directory does not exist: ${inputDirectory}`);
         }
@@ -41,7 +38,7 @@ export const validate = async (config: Config, options: Options): Promise<void> 
     }
 
     const validateOutputFilenameOptions = (outputFilenameOptions: string[] | undefined, outputStructure: FilesystemStructure | undefined): void => {
-        if (outputFilenameOptions) {
+        if (outputFilenameOptions && outputFilenameOptions.length > 0) {
             // Check if first argument contains commas - likely a comma-separated list
             if (outputFilenameOptions[0].includes(',')) {
                 throw new ArgumentError('--output-filename-options', 'Filename options should be space-separated, not comma-separated. Example: --output-filename-options date time subject');
@@ -74,7 +71,7 @@ export const validate = async (config: Config, options: Options): Promise<void> 
     }
 
     const validateInputFilenameOptions = (inputFilenameOptions: string[] | undefined, inputStructure: FilesystemStructure | undefined): void => {
-        if (inputFilenameOptions) {
+        if (inputFilenameOptions && inputFilenameOptions.length > 0) {
             // Check if first argument contains commas - likely a comma-separated list
             if (inputFilenameOptions[0].includes(',')) {
                 throw new ArgumentError('--input-filename-options', 'Filename options should be space-separated, not comma-separated. Example: --input-filename-options date time subject');
@@ -127,6 +124,12 @@ export const validate = async (config: Config, options: Options): Promise<void> 
     if (options.features.includes('input') && config.limit) {
         if (config.limit < 1) {
             throw new ArgumentError('--limit', 'Limit must be greater than 0');
+        }
+    }
+
+    if (options.features.includes('input') && config.concurrency !== undefined) {
+        if (!Number.isInteger(config.concurrency) || config.concurrency < 1) {
+            throw new ArgumentError('--concurrency', 'Concurrency must be a positive integer');
         }
     }
 

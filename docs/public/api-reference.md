@@ -15,7 +15,7 @@ Creates a new DreadCabinet instance with the specified configuration.
 
 **Example:**
 ```javascript
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 
 const instance = DreadCabinet.create({
   defaults: {
@@ -370,7 +370,7 @@ DreadCabinet provides default constants you can use:
 Default configuration options.
 
 ```javascript
-import { DEFAULT_OPTIONS } from '@theunwalked/dreadcabinet';
+import { DEFAULT_OPTIONS } from '@utilarium/dreadcabinet';
 
 const instance = DreadCabinet.create({
   defaults: {
@@ -384,7 +384,7 @@ const instance = DreadCabinet.create({
 Default feature flags.
 
 ```javascript
-import { DEFAULT_FEATURES } from '@theunwalked/dreadcabinet';
+import { DEFAULT_FEATURES } from '@utilarium/dreadcabinet';
 
 const instance = DreadCabinet.create({
   features: DEFAULT_FEATURES // Use all default features
@@ -401,7 +401,7 @@ import type {
   FileInfo, 
   DreadCabinetInstance, 
   Operator 
-} from '@theunwalked/dreadcabinet';
+} from '@utilarium/dreadcabinet';
 
 const processFn = async (file: FileInfo): Promise<void> => {
   // Type-safe file processing
@@ -414,7 +414,7 @@ const processFn = async (file: FileInfo): Promise<void> => {
 ### Timezone Helpers
 
 ```javascript
-import { getValidTimezones, isValidTimezone } from '@theunwalked/dreadcabinet';
+import { getValidTimezones, isValidTimezone } from '@utilarium/dreadcabinet';
 
 // Check if a timezone is valid
 if (isValidTimezone('America/New_York')) {
@@ -428,7 +428,7 @@ const timezones = getValidTimezones();
 ### Path Utilities
 
 ```javascript
-import { generateOutputPath, sanitizeFilename } from '@theunwalked/dreadcabinet';
+import { generateOutputPath, sanitizeFilename } from '@utilarium/dreadcabinet';
 
 // Generate output path for a file
 const outputPath = generateOutputPath(file, config);

@@ -137,10 +137,13 @@ function App() {
                     </div>
                     <p className="subtitle">Organize Your Digital Chaos</p>
                     <div className="header-links">
+                        <a href="https://utilarium.github.io" target="_blank" rel="noopener noreferrer">
+                            Utilarium
+                        </a>
                         <a href="https://github.com/utilarium/dreadcabinet" target="_blank" rel="noopener noreferrer">
                             GitHub
                         </a>
-                        <a href="https://www.npmjs.com/package/@theunwalked/dreadcabinet" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.npmjs.com/package/@utilarium/dreadcabinet" target="_blank" rel="noopener noreferrer">
                             NPM
                         </a>
                     </div>

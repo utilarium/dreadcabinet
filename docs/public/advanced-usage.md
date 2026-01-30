@@ -52,7 +52,7 @@ Enables features for interpreting existing structure in the input directory or f
 ### Example Usage
 
 ```javascript
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 
 const instance = DreadCabinet.create({
   defaults: {

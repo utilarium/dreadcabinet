@@ -15,15 +15,15 @@
 
 ## Installation
 
-```bash
-npm install @theunwalked/dreadcabinet
+```console
+npm install @utilarium/dreadcabinet
 ```
 
 *Or with other package managers:*
 
 ```console
 # yarn
-yarn add @theunwalked/dreadcabinet
+yarn add @utilarium/dreadcabinet
 ```
 
 ## Quick Start
@@ -32,7 +32,7 @@ DreadCabinet is a library designed to be integrated into your own CLI tools. Her
 
 ```javascript
 import { Command } from 'commander';
-import * as DreadCabinet from '@theunwalked/dreadcabinet';
+import * as DreadCabinet from '@utilarium/dreadcabinet';
 
 // Create a new instance with options
 const instance = DreadCabinet.create({
