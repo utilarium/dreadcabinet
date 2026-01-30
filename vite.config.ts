@@ -69,7 +69,7 @@ export default defineConfig({
         outDir: 'dist',
         rollupOptions: {
             external: [
-                '@theunwalked/cardigantime',
+                '@utilarium/cardigantime',
                 // Node built-ins
                 /^node:/,
             ],
