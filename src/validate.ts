@@ -15,12 +15,9 @@ export { ArgumentError };
 
 export const validate = async (config: Config, options: Options): Promise<void> => {
 
-    const logger: typeof console = console;
-    const storage = Storage.create({ log: logger.debug });
+    const storage = Storage.create({ log: options.logger.debug });
 
     const validateInputDirectory = async (inputDirectory: string) => {
-        // eslint-disable-next-line no-console
-        const storage = Storage.create({ log: console.log });
         if (!storage.isDirectoryReadable(inputDirectory)) {
             throw new Error(`Input directory does not exist: ${inputDirectory}`);
         }
