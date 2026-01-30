@@ -130,6 +130,12 @@ export const validate = async (config: Config, options: Options): Promise<void> 
         }
     }
 
+    if (options.features.includes('input') && config.concurrency !== undefined) {
+        if (!Number.isInteger(config.concurrency) || config.concurrency < 1) {
+            throw new ArgumentError('--concurrency', 'Concurrency must be a positive integer');
+        }
+    }
+
     if (options.features.includes('output') && config.outputDirectory) {
         await validateOutputDirectory(config.outputDirectory);
     }
