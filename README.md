@@ -15,7 +15,7 @@
 
 ## Installation
 
-```bash
+```console
 npm install @utilarium/dreadcabinet
 ```
 
