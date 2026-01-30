@@ -85,43 +85,43 @@ describe('structured.ts', () => {
     describe('parseDateFromString', () => {
         it('should parse YYYY-M-D-HHmm format with time', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('2022-1-15-0830', 'YYYY-M-D-HHmm', true);
+            const date = structured.parseDateFromString('2022-1-15-0830', 'YYYY-M-D-HHmm', true, 'UTC');
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
         });
 
         it('should parse YYYY-M-D-HHmm format without time', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('2022-1-15', 'YYYY-M-D-HHmm', false);
+            const date = structured.parseDateFromString('2022-1-15', 'YYYY-M-D-HHmm', false, 'UTC');
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 0, 0)));
         });
 
         it('should parse M-D-HHmm format with time', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('1-15-0830', 'M-D-HHmm', true, 2022);
+            const date = structured.parseDateFromString('1-15-0830', 'M-D-HHmm', true, 'UTC', 2022);
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
         });
 
         it('should parse D-HHmm format with time', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('15-0830', 'D-HHmm', true, 2022, 0);
+            const date = structured.parseDateFromString('15-0830', 'D-HHmm', true, 'UTC', 2022, 0);
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
         });
 
         it('should parse HHmm format with time', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('0830', 'HHmm', true, 2022, 0, 15);
+            const date = structured.parseDateFromString('0830', 'HHmm', true, 'UTC', 2022, 0, 15);
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
         });
 
         it('should return null for invalid date', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('invalid', 'YYYY-M-D-HHmm', true);
+            const date = structured.parseDateFromString('invalid', 'YYYY-M-D-HHmm', true, 'UTC');
             expect(date).toBeNull();
         });
 
         it('should return null for out of range values', async () => {
             const structured = await importStructured();
-            const date = structured.parseDateFromString('2022-13-32-2460', 'YYYY-M-D-HHmm', true);
+            const date = structured.parseDateFromString('2022-13-32-2460', 'YYYY-M-D-HHmm', true, 'UTC');
             expect(date).toBeNull();
         });
     });
@@ -207,6 +207,7 @@ describe('structured.ts', () => {
                 '2022-01-15-0830-test.txt',
                 'none',
                 true,
+                'UTC',
                 mockLogger
             );
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
@@ -219,6 +220,7 @@ describe('structured.ts', () => {
                 '01-15-0830-test.txt',
                 'year',
                 true,
+                'UTC',
                 mockLogger
             );
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
@@ -231,6 +233,7 @@ describe('structured.ts', () => {
                 '15-0830-test.txt',
                 'month',
                 true,
+                'UTC',
                 mockLogger
             );
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
@@ -243,6 +246,7 @@ describe('structured.ts', () => {
                 '0830-test.txt',
                 'day',
                 true,
+                'UTC',
                 mockLogger
             );
             expect(date).toEqual(new Date(Date.UTC(2022, 0, 15, 8, 30)));
@@ -255,6 +259,7 @@ describe('structured.ts', () => {
                 'invalid.txt',
                 'year',
                 true,
+                'UTC',
                 mockLogger
             );
             expect(date).toBeNull();
@@ -275,6 +280,7 @@ describe('structured.ts', () => {
                 '/input',
                 'day',
                 true,
+                'UTC',
                 callback,
                 '**/*.*',
                 dateRange,
@@ -301,6 +307,7 @@ describe('structured.ts', () => {
                 '/input',
                 'day',
                 true,
+                'UTC',
                 callback,
                 '**/*.*',
                 dateRange,
@@ -324,6 +331,7 @@ describe('structured.ts', () => {
                 '/input',
                 'day',
                 true,
+                'UTC',
                 callback,
                 '**/*.*',
                 dateRange,
