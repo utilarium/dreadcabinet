@@ -116,6 +116,9 @@ export const create = (params: { log?: (message: string, ...args: any[]) => void
         options: { pattern: string | string[], limit?: number, concurrency?: number } = { pattern: '*.*' },
     ): Promise<void> => {
         try {
+            // NOTE: glob loads all matching files into memory before processing.
+            // For directories with millions of files, this can cause out-of-memory errors.
+            // Consider using streaming glob or incremental processing for very large directories.
             const files = await glob(options.pattern, { cwd: directory, nodir: true });
             const concurrency = options.concurrency || 1;
             const limit = options.limit || files.length;
