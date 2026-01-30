@@ -40,6 +40,7 @@ describe('read', () => {
         const expectedConfig: Partial<Config> = {
             timezone: 'UTC',
             inputDirectory: '/input/dir',
+            recursive: false,
             inputStructure: 'none',
             inputFilenameOptions: ['date', 'subject'],
             outputDirectory: '/output/dir',
@@ -84,6 +85,7 @@ describe('read', () => {
         const expectedConfig: Partial<Config> = {
             timezone: 'UTC',
             inputDirectory: '/input/dir',
+            recursive: false,
             // inputStructure omitted
             // inputFilenameOptions omitted
             outputDirectory: '/output/dir',
@@ -99,6 +101,7 @@ describe('read', () => {
         const expectedConfig: Partial<Config> = {
             timezone: 'UTC',
             inputDirectory: '/input/dir',
+            recursive: false,
             inputStructure: undefined,
             inputFilenameOptions: undefined,
             // outputDirectory omitted
@@ -119,6 +122,7 @@ describe('read', () => {
         const expectedConfig: Partial<Config> = {
             timezone: 'UTC',
             inputDirectory: '/input/dir',
+            recursive: false,
             inputStructure: undefined,
             inputFilenameOptions: undefined,
             outputDirectory: '/output/dir',
@@ -134,6 +138,7 @@ describe('read', () => {
         const expectedConfig: Partial<Config> = {
             timezone: 'UTC',
             inputDirectory: '/input/dir',
+            recursive: false,
             inputStructure: undefined,
             inputFilenameOptions: undefined,
             outputDirectory: '/output/dir',
@@ -150,6 +155,7 @@ describe('read', () => {
         const expectedConfig: Partial<Config> = {
             timezone: 'UTC',
             inputDirectory: '/input/dir',
+            recursive: false,
             inputStructure: undefined,
             inputFilenameOptions: undefined,
             outputDirectory: '/output/dir',

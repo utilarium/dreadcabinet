@@ -131,40 +131,40 @@ describe('Output Module', () => {
     };
 
     describe('constructOutputDirectory', () => {
-        it('should throw if outputDirectory is not set', () => {
+        it('should throw if outputDirectory is not set', async () => {
             const { constructOutputDirectory } = getInstance({ outputDirectory: undefined });
-            expect(() => constructOutputDirectory(testDate))
-                .toThrow('Unable to Create Output: Output directory is not set');
+            await expect(constructOutputDirectory(testDate))
+                .rejects.toThrow('Unable to Create Output: Output directory is not set');
         });
 
-        it('should throw if outputStructure is not set', () => {
+        it('should throw if outputStructure is not set', async () => {
             const { constructOutputDirectory } = getInstance({ outputStructure: undefined });
-            expect(() => constructOutputDirectory(testDate))
-                .toThrow('Unable to Create Output: Output structure is not set');
+            await expect(constructOutputDirectory(testDate))
+                .rejects.toThrow('Unable to Create Output: Output structure is not set');
         });
 
 
-        it('should construct path for outputStructure "none"', () => {
+        it('should construct path for outputStructure "none"', async () => {
             const { constructOutputDirectory } = getInstance({ outputStructure: 'none' });
-            const result = constructOutputDirectory(testDate);
+            const result = await constructOutputDirectory(testDate);
             expect(result).toBe('/output/base');
             expect(mockDatesCreate).toHaveBeenCalledWith({ timezone: 'UTC' });
             expect(mockStorageCreate).toHaveBeenCalledWith({ log: baseOptions.logger.debug });
             expect(mockCreateDirectory).toHaveBeenCalledWith('/output/base');
         });
 
-        it('should construct path for outputStructure "year"', () => {
+        it('should construct path for outputStructure "year"', async () => {
             const { constructOutputDirectory } = getInstance({ outputStructure: 'year' });
-            const result = constructOutputDirectory(testDate);
+            const result = await constructOutputDirectory(testDate);
             const expectedPath = path.join('/output/base', '2024');
             expect(result).toBe(expectedPath);
             expect(mockDateFormat).toHaveBeenCalledWith(testDate, 'YYYY');
             expect(mockCreateDirectory).toHaveBeenCalledWith(expectedPath);
         });
 
-        it('should construct path for outputStructure "month"', () => {
+        it('should construct path for outputStructure "month"', async () => {
             const { constructOutputDirectory } = getInstance({ outputStructure: 'month' });
-            const result = constructOutputDirectory(testDate);
+            const result = await constructOutputDirectory(testDate);
             const expectedPath = path.join('/output/base', '2024', '06');
             expect(result).toBe(expectedPath);
             expect(mockDateFormat).toHaveBeenCalledWith(testDate, 'YYYY');
@@ -172,9 +172,9 @@ describe('Output Module', () => {
             expect(mockCreateDirectory).toHaveBeenCalledWith(expectedPath);
         });
 
-        it('should construct path for outputStructure "day"', () => {
+        it('should construct path for outputStructure "day"', async () => {
             const { constructOutputDirectory } = getInstance({ outputStructure: 'day' });
-            const result = constructOutputDirectory(testDate);
+            const result = await constructOutputDirectory(testDate);
             const expectedPath = path.join('/output/base', '2024', '06', '15');
             expect(result).toBe(expectedPath);
             expect(mockDateFormat).toHaveBeenCalledWith(testDate, 'YYYY');
@@ -183,9 +183,9 @@ describe('Output Module', () => {
             expect(mockCreateDirectory).toHaveBeenCalledWith(expectedPath);
         });
 
-        it('should use the configured timezone', () => {
+        it('should use the configured timezone', async () => {
             const { constructOutputDirectory } = getInstance({ timezone: 'America/New_York' });
-            constructOutputDirectory(testDate);
+            await constructOutputDirectory(testDate);
             expect(mockDatesCreate).toHaveBeenCalledWith({ timezone: 'America/New_York' });
         });
     });

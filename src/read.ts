@@ -16,7 +16,9 @@ export const read = async (args: Args, features: Feature[]): Promise<Partial<Con
     config.timezone = args.timezone;
     if (features.includes('input')) {
         config.inputDirectory = args.inputDirectory;
+        config.recursive = args.recursive;
         config.limit = args.limit;
+        config.concurrency = args.concurrency;
     }
     if (features.includes('structured-input')) {
         config.inputStructure = args.inputStructure;

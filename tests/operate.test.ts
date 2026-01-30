@@ -15,7 +15,7 @@ const mockInputCreate = vi.fn<typeof Input.create>().mockReturnValue({
 // Mock Output module
 // Use the actual return type structure from Output.create
 const mockOutputConstructFilename = vi.fn<(date: Date, type: string, hash: string, options?: { subject?: string }) => string>();
-const mockOutputConstructOutputDirectory = vi.fn<(creationTime: Date) => string>();
+const mockOutputConstructOutputDirectory = vi.fn<(creationTime: Date) => Promise<string>>();
 
 const mockOutputCreate = vi.fn<typeof Output.create>().mockReturnValue({
     constructFilename: mockOutputConstructFilename,
@@ -136,7 +136,7 @@ describe('Operator Factory (create)', () => {
     describe('constructOutputDirectory', () => {
         test('should call output.constructOutputDirectory when output feature is enabled', async () => {
             const expectedDir = '/out/2023/11';
-            mockOutputConstructOutputDirectory.mockReturnValue(expectedDir);
+            mockOutputConstructOutputDirectory.mockResolvedValue(expectedDir);
 
             const dir = await testOperator.constructOutputDirectory(testDate);
 

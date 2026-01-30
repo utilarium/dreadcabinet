@@ -406,10 +406,10 @@ export const process = async (
 
     // Validate date range dates if provided
     if (dateRange?.start && (!dateRange.start || isNaN(dateRange.start.getTime()))) {
-        logger.warn(`Invalid start date provided in dateRange: ${dateRange.start}`);
+        throw new Error(`Invalid start date provided in dateRange: ${dateRange.start}`);
     }
     if (dateRange?.end && (!dateRange.end || isNaN(dateRange.end.getTime()))) {
-        logger.warn(`Invalid end date provided in dateRange: ${dateRange.end}`);
+        throw new Error(`Invalid end date provided in dateRange: ${dateRange.end}`);
     }
 
     // Structured Input Logic
