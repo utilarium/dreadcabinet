@@ -18,7 +18,7 @@ export const validate = async (config: Config, options: Options): Promise<void> 
     const storage = Storage.create({ log: options.logger.debug });
 
     const validateInputDirectory = async (inputDirectory: string) => {
-        if (!storage.isDirectoryReadable(inputDirectory)) {
+        if (!await storage.isDirectoryReadable(inputDirectory)) {
             throw new Error(`Input directory does not exist: ${inputDirectory}`);
         }
     }
