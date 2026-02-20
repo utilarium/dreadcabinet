@@ -1,6 +1,12 @@
 import { Logger } from 'dreadcabinet';
 import * as Storage from "../util/storage";
 
+// Sanitize a file extension to prevent glob injection.
+// Only allows alphanumeric characters, stripping any glob metacharacters.
+const sanitizeExtension = (ext: string): string => {
+    return ext.replace(/[^a-zA-Z0-9]/g, '');
+};
+
 // Process files with unstructured input pattern
 export const process = async (
     inputDirectory: string,
@@ -17,13 +23,17 @@ export const process = async (
     let filePattern = `${recursive ? '**/' : ''}*`;
 
     if (extensions && extensions.length > 0) {
+        const safeExtensions = extensions.map(sanitizeExtension).filter(ext => ext.length > 0);
+        if (safeExtensions.length === 0) {
+            throw new Error('No valid extensions provided after sanitization.');
+        }
         // Ensure the pattern correctly handles extensions with or without recursion
         if (recursive) {
-            filePattern = `**/*.{${extensions.join(',')}}`;
+            filePattern = `**/*.{${safeExtensions.join(',')}}`;
         } else {
-            filePattern = `*.{${extensions.join(',')}}`;
+            filePattern = `*.{${safeExtensions.join(',')}}`;
         }
-        logger.debug(`Applying extension filter: ${extensions.join(',')}`);
+        logger.debug(`Applying extension filter: ${safeExtensions.join(',')}`);
     } else if (!recursive) {
         // Non-recursive without extension filter: only files in the top directory
         filePattern = `*.*`; // Adjust if files without extensions need matching

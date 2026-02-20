@@ -13,6 +13,12 @@ export const DateRangeSchema = z.object({
 
 export type DateRange = z.infer<typeof DateRangeSchema>;
 
+// Sanitize a file extension to prevent glob injection.
+// Only allows alphanumeric characters, stripping any glob metacharacters.
+const sanitizeExtension = (ext: string): string => {
+    return ext.replace(/[^a-zA-Z0-9]/g, '');
+};
+
 // Get the appropriate file pattern based on config and options
 export const getFilePattern = (features: Feature[], extensions: string[], logger: Logger): string => {
     // Validate extensions: they should not start with a dot.
@@ -28,12 +34,16 @@ export const getFilePattern = (features: Feature[], extensions: string[], logger
 
     let pattern = '**/*'; // Start with a broad pattern for recursive search
     if (features.includes('extensions') && extensions && extensions.length > 0) {
-        if (extensions.length === 1) {
-            pattern = `**/*.${extensions[0]}`;
-        } else {
-            pattern = `**/*.{${extensions.join(',')}}`;
+        const safeExtensions = extensions.map(sanitizeExtension).filter(ext => ext.length > 0);
+        if (safeExtensions.length === 0) {
+            throw new Error('No valid extensions provided after sanitization.');
         }
-        logger.debug(`Applying extension filter: ${extensions.join(',')}`);
+        if (safeExtensions.length === 1) {
+            pattern = `**/*.${safeExtensions[0]}`;
+        } else {
+            pattern = `**/*.{${safeExtensions.join(',')}}`;
+        }
+        logger.debug(`Applying extension filter: ${safeExtensions.join(',')}`);
     } else {
         pattern = `**/*.*`;
         logger.debug(`No extension filter applied, using pattern: ${pattern}`);
