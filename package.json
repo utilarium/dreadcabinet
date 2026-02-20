@@ -1,6 +1,6 @@
 {
   "name": "@utilarium/dreadcabinet",
-  "version": "0.0.18",
+  "version": "0.0.19-dev.0",
   "description": "dreadcabinet organizes the chaos.",
   "main": "dist/dreadcabinet.cjs",
   "module": "dist/dreadcabinet.js",
